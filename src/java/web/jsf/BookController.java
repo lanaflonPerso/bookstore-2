@@ -92,7 +92,7 @@ public class BookController implements Serializable {
     
     public String search(String searchValue){
         String title = getSelected().getTitle();
-        items=new ListDataModel(getFacade().search("select b from Book b where b.title LIKE '%"+title+"%' or b.author LIKE '%"+title+"%' or b.publisher LIKE '%"+title+"%' b.description LIKE '%"+title+"%' "));
+        items=new ListDataModel(getFacade().search("select b from Book b where b.title LIKE '%"+title+"%' or b.author LIKE '%"+title+"%' or b.publisher LIKE '%"+title+"%' or b.description LIKE '%"+title+"%' "));
 //        items=new ListDataModel(getFacade().search("select b from Book b where b.title LIKE '%"+title+"%' or b.author LIKE '%"+title+"%' or b.publisher LIKE '%"+title+"%' or b.description LIKE '%"+title+"%' "));
 //        items=new ListDataModel(getFacade().search("select b.book_id,b.title,b.author,b.category_id,b.created_date,b.price,b.image,b.publisher,b.stock,b.description FROM Book b"));
         return "List";
