@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateBillDetailsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateBillDetailsLabel_quantity}" for="quantity" />
+                    <h:inputText id="quantity" value="#{billDetailsController.selected.quantity}" title="#{bundle.CreateBillDetailsTitle_quantity}" required="true" requiredMessage="#{bundle.CreateBillDetailsRequiredMessage_quantity}"/>
+                    <h:outputLabel value="#{bundle.CreateBillDetailsLabel_price}" for="price" />
+                    <h:inputText id="price" value="#{billDetailsController.selected.price}" title="#{bundle.CreateBillDetailsTitle_price}" />
+                    <h:outputLabel value="#{bundle.CreateBillDetailsLabel_book}" for="book" />
+                    <h:selectOneMenu id="book" value="#{billDetailsController.selected.book}" title="#{bundle.CreateBillDetailsTitle_book}" required="true" requiredMessage="#{bundle.CreateBillDetailsRequiredMessage_book}">
+                        <f:selectItems value="#{bookController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateBillDetailsLabel_bookBill}" for="bookBill" />
+                    <h:selectOneMenu id="bookBill" value="#{billDetailsController.selected.bookBill}" title="#{bundle.CreateBillDetailsTitle_bookBill}" required="true" requiredMessage="#{bundle.CreateBillDetailsRequiredMessage_bookBill}">
+                        <f:selectItems value="#{bookBillController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{billDetailsController.create}" value="#{bundle.CreateBillDetailsSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{billDetailsController.prepareList}" value="#{bundle.CreateBillDetailsShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateBillDetailsIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

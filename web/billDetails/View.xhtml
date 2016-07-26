@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewBillDetailsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewBillDetailsLabel_quantity}"/>
+                    <h:outputText value="#{billDetailsController.selected.quantity}" title="#{bundle.ViewBillDetailsTitle_quantity}"/>
+                    <h:outputText value="#{bundle.ViewBillDetailsLabel_price}"/>
+                    <h:outputText value="#{billDetailsController.selected.price}" title="#{bundle.ViewBillDetailsTitle_price}"/>
+                    <h:outputText value="#{bundle.ViewBillDetailsLabel_book}"/>
+                    <h:outputText value="#{billDetailsController.selected.book}" title="#{bundle.ViewBillDetailsTitle_book}"/>
+                    <h:outputText value="#{bundle.ViewBillDetailsLabel_bookBill}"/>
+                    <h:outputText value="#{billDetailsController.selected.bookBill}" title="#{bundle.ViewBillDetailsTitle_bookBill}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{billDetailsController.destroyAndView}" value="#{bundle.ViewBillDetailsDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewBillDetailsEditLink}"/>
+                <br />
+                <h:commandLink action="#{billDetailsController.prepareCreate}" value="#{bundle.ViewBillDetailsCreateLink}" />
+                <br />
+                <h:commandLink action="#{billDetailsController.prepareList}" value="#{bundle.ViewBillDetailsShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewBillDetailsIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

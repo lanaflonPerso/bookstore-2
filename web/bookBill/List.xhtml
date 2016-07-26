@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListBookBillTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListBookBillEmpty}" rendered="#{bookBillController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{bookBillController.items.rowCount > 0}">
+                    <h:outputText value="#{bookBillController.pagination.pageFirstItem + 1}..#{bookBillController.pagination.pageLastItem + 1}/#{bookBillController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{bookBillController.previous}" value="#{bundle.Previous} #{bookBillController.pagination.pageSize}" rendered="#{bookBillController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{bookBillController.next}" value="#{bundle.Next} #{bookBillController.pagination.pageSize}" rendered="#{bookBillController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{bookBillController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListBookBillTitle_billId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.billId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListBookBillTitle_totalPrice}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.totalPrice}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListBookBillTitle_customerId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.customerId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{bookBillController.prepareView}" value="#{bundle.ListBookBillViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{bookBillController.prepareEdit}" value="#{bundle.ListBookBillEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{bookBillController.destroy}" value="#{bundle.ListBookBillDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{bookBillController.prepareCreate}" value="#{bundle.ListBookBillCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListBookBillIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
