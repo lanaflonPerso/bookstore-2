@@ -26,8 +26,8 @@
     </nav>
 </div>
         </ui:define>-->
-        <ui:define name="title">
-<!--            <h:outputText value="#{bundle.CreateBookTitle}"></h:outputText>-->
+        <ui:define name="pagetitle">
+Crissword
         </ui:define>
         <ui:define name="body">
             
@@ -79,29 +79,33 @@
               <div class="row">
                   <div class="col-xs-12">
                       <div class="well">
-                          <form id="loginForm" method="POST" action="home.jsp" novalidate="novalidate">
+                          <h:form id="loginForm" >
                               <div class="form-group">
                                   <label for="username" class="control-label">Username</label>
-                                  <input type="text" class="form-control" id="username" name="username" value="" required="" title="Please enter you username" placeholder="example@gmail.com" />
-                                  <span class="help-block"></span>
+                                  <h:inputText  class="form-control" value="#{loginController.username}" id="username" name="username"  required="true" requiredMessage="Username is required" title="Please enter you username" />
+                                  <h:message for="username" errorClass="text-danger"></h:message>
+                                  <span class="help-block" ></span>
                               </div>
                               <div class="form-group">
                                   <label for="password" class="control-label">Password</label>
-                                  <input type="password" class="form-control" id="password" name="password" value="" required="" title="Please enter your password" />
+                                  
+                                  <h:inputSecret  class="form-control" value="#{loginController.password}" id="password" name="password" required="true"  requiredMessage="Password is required" title="Please enter your password" />
+                                  <h:message for="password"  errorClass="text-danger"></h:message>
                                   <span class="help-block"></span>
                               </div>
-                              <div class="form-group">
+<!--                              <div class="form-group">
                                   <label for="usertype" class="control-label">User Type</label>
                                   <select class="form-control" id="usertype">
                                       <option value="E">Employee</option>
                                       <option value="E">Customer</option>
                                   </select>
                                   <span class="help-block"></span>
-                              </div>
+                              </div>-->
                               <div id="loginErrorMsg" class="alert alert-error hide">Wrong username or password or user type.</div>
-                              <button type="submit" class="btn btn-success btn-block">Login</button>
+                              
+                              <h:commandButton action="#{loginController.login()}" type="submit" class="btn btn-success btn-block" value="Login"></h:commandButton>
                               <a href="/register/" class="btn btn-default btn-block">Register as a Customer</a>
-                          </form>
+                          </h:form>
                       </div>
                   </div>
               </div>
