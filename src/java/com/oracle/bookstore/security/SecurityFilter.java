@@ -116,7 +116,7 @@ public class SecurityFilter implements Filter {
         
         String URI = ((HttpServletRequest)request).getRequestURI();     
         System.out.println("URI ----->>>>>"+URI);
-        if(URI.startsWith("/bookstore/faces/") && !URI.equalsIgnoreCase("/bookstore/faces/index.xhtml")){
+        if(URI.startsWith("/bookstore/faces/") && !URI.startsWith("/bookstore/faces/css/") && !URI.equalsIgnoreCase("/bookstore/faces/index.xhtml")){
             if (loginController != null &&  loginController.getUsername() != null) {
                 // Logged in.
                 System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n null....");
