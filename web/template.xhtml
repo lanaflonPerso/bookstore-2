@@ -8,15 +8,77 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title><ui:insert name="title">Default Title</ui:insert></title>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous" ></link>
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous"> </link>
+<link rel="stylesheet" href="css/newcss.css"></link>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<link rel="stylesheet" 
+href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></link>
+<script type="text/javascript" 
+src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" 
+src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+        $('#myTable').dataTable();
+    });
+</script>
     </h:head>
 
     <h:body>
+        <div class="container-fluid">
+            
+        
+        <ui:insert name="header">
+        
+
+    <nav class="navbar navbar-inverse">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">CrissWord</a>
+        </div>
+        <ul class="nav navbar-nav navbar-left">
+        <li><h:link outcome="/index" value="honme"/></li>
+        
+        <li><h:link outcome="/billDetails/List" value="BillDetails"/></li>
+        
+        <li><h:link outcome="/book/List" value="Book"/></li>
+        
+        <li><h:link outcome="/bookBill/List" value="BookBill"/></li>
+        
+        <li><h:link outcome="/cart/List" value="Cart"/></li>
+        
+        <li><h:link outcome="/category/List" value="Category"/></li>
+        
+        <li><h:link outcome="/customer/List" value="Customer"/></li>
+        
+        <li><h:link outcome="/book/Search" value="Search Book"/></li>
+        
+        </ul>
+
+
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Out</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Profile</a></li>
+        </ul>
+
+    </nav>
+        </ui:insert>
+        
         <h1>
             <ui:insert name="title">Default Title</ui:insert>
         </h1>
         <p>
             <ui:insert name="body">Default Body</ui:insert>
         </p>
+            </div>
     </h:body>
 
 </html>
