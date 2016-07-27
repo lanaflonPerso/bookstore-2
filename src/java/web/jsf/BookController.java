@@ -17,6 +17,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import java.util.List;
 
 @Named("bookController")
 @SessionScoped
@@ -90,12 +91,21 @@ public class BookController implements Serializable {
         }
     }
     
-    public String search(String searchValue){
-        String title = getSelected().getTitle();
-        items=new ListDataModel(getFacade().search("select b from Book b where b.title LIKE '%"+title+"%' or b.author LIKE '%"+title+"%' or b.publisher LIKE '%"+title+"%' or b.description LIKE '%"+title+"%' "));
-//        items=new ListDataModel(getFacade().search("select b from Book b where b.title LIKE '%"+title+"%' or b.author LIKE '%"+title+"%' or b.publisher LIKE '%"+title+"%' or b.description LIKE '%"+title+"%' "));
-//        items=new ListDataModel(getFacade().search("select b.book_id,b.title,b.author,b.category_id,b.created_date,b.price,b.image,b.publisher,b.stock,b.description FROM Book b"));
-        return "List";
+    public String search(){
+        try{
+            String title = getSelected().getTitle();            
+            if(!"".equalsIgnoreCase(title)){
+                List searchResultList=getFacade().search("select b from Book b where b.title LIKE '%"+title+"%' or b.author LIKE '%"+title+"%' or b.publisher LIKE '%"+title+"%' or b.description LIKE '%"+title+"%' ");
+                items=new ListDataModel(searchResultList);                
+            }else{
+                items = null;
+            }
+        }catch (Exception e) {
+            System.out.println("Exception :: ");
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            return null;
+        }
+        return null;
     }
     
 
