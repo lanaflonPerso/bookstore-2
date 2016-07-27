@@ -48,7 +48,7 @@ public class LoginController {
         System.out.println("  "+username+"   --> "+password);
         this.setPassword(null);
         this.setUsername(null);
-        return "index";
+        return "/index";
     }
     
 }
