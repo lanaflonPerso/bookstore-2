@@ -15,7 +15,7 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.CreateBookLabel_title}" for="title" />
+                    <!--<h:outputLabel value="#{bundle.CreateBookLabel_title}" for="title" />-->
                     <h:inputText id="title" value="#{bookController.selected.title}" title="#{bundle.CreateBookLabel_title}" requiredMessage="#{bundle.SearchBookRequiredMessage_bookTitle}" autocomplete="off" >
                         <f:ajax render="output" event="keyup" listener="#{bookController.search}" ></f:ajax>
                     </h:inputText>
@@ -23,7 +23,9 @@
                 <h:panelGroup id="searchPanelGroup" layout="block" >
                     <h:panelGrid id="output" style="margin-top: -12px;" >                 
                         <ui:repeat value="#{bookController.items}" var="item" rendered="#{bookController.selected.title.length()>0}">
-                            <li class="searchResult"><h:outputText value="#{item.title}"/></li>
+                            <li class="searchResult">
+                                <h:commandLink action="#{bookController.prepareView}" value="#{item.title} #{item.author}"/>                                
+                            </li>
                         </ui:repeat>                    
                     </h:panelGrid>
                 </h:panelGroup>
