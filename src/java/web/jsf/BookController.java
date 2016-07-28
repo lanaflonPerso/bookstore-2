@@ -6,6 +6,7 @@ import web.jsf.util.PaginationHelper;
 import web.servicebeans.BookFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -18,6 +19,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import java.util.List;
+import javax.persistence.Query;
 
 @Named("bookController")
 @SessionScoped
@@ -25,12 +27,20 @@ public class BookController implements Serializable {
 
     private Book current;
     private DataModel items = null;
+    private DataModel cartItems = null;
     @EJB
     private web.servicebeans.BookFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
     public BookController() {
+    }
+    
+    public DataModel getCartItems() {
+        if (cartItems == null) {
+            cartItems = getPagination().createPageDataModel();
+        }
+        return cartItems;
     }
 
     public Book getSelected() {
@@ -250,5 +260,22 @@ public class BookController implements Serializable {
         }
 
     }
-
+    
+    public String addToCart() {
+        current = (Book) getItems().getRowData();
+        // send request to facade and save there.
+        ejbFacade.saveBookInCart(current);
+        
+        // get all items of a user from database. Also add recently selected one and prepare list.
+        Query query = ejbFacade.getEntityManager().createQuery("select b from Book b, Cart c where b.bookId=c.cartPK.bookId and c.customerId.customerId= :cust");
+        query.setParameter("cust", 1);
+        List<Book> bookList = query.getResultList();
+        List<Book> list = new ArrayList<>();
+        // list.add(current);
+        for(int i=0; i<bookList.size(); i++) {
+            list.add(bookList.get(i));
+        }
+        cartItems = new ListDataModel(list);
+        return "Cart";
+    }
 }

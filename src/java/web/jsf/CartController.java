@@ -17,6 +17,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import org.apache.jasper.tagplugins.jstl.ForEach;
 
 @Named("cartController")
 @SessionScoped
@@ -28,6 +29,8 @@ public class CartController implements Serializable {
     private web.servicebeans.CartFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    @javax.faces.bean.ManagedProperty(value = "loginController")
+    private LoginController objLoginController;
 
     public CartController() {
     }
@@ -56,7 +59,10 @@ public class CartController implements Serializable {
 
                 @Override
                 public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                    DataModel tempCarts = new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                    for(int i=0; i<tempCarts.getRowCount(); i++) {
+                    }
+                
                 }
             };
         }
