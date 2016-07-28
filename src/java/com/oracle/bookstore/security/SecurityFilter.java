@@ -10,6 +10,7 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.security.auth.message.AuthException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -26,6 +27,7 @@ import web.jsf.LoginController;
  *
  * @author tmshah
  */
+@Named("securityFilter")
 public class SecurityFilter implements Filter {
     
     private static final boolean debug = true;
@@ -34,6 +36,9 @@ public class SecurityFilter implements Filter {
     // this value is null, this filter instance is not currently
     // configured. 
     private FilterConfig filterConfig = null;
+    
+    @Inject
+    LoginController loginController;
     
     public SecurityFilter() {
         
@@ -112,7 +117,7 @@ public class SecurityFilter implements Filter {
         }
                 HttpSession session = ((HttpServletRequest) request).getSession(false);
                 HttpServletResponse httpResponse = (HttpServletResponse) response;
-        LoginController loginController = (session != null) ? (LoginController) session.getAttribute("loginController") : null;
+//        LoginController loginController = (session != null) ? (LoginController) session.getAttribute("loginController") : null;
         
         String URI = ((HttpServletRequest)request).getRequestURI();     
         System.out.println("URI ----->>>>>"+URI);

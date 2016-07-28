@@ -6,10 +6,10 @@
 package web.jsf;
 
 import com.oracle.bookstore.entities.Customer;
+import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import web.jsf.util.JsfUtil;
 
@@ -19,8 +19,7 @@ import web.jsf.util.JsfUtil;
  */
 @Named("loginController")
 @SessionScoped
-@ManagedBean
-public class LoginController {
+public class LoginController implements Serializable{
     
     @EJB
     private web.servicebeans.CustomerFacade ejbFacade;
