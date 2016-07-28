@@ -6,10 +6,14 @@ import web.jsf.util.PaginationHelper;
 import web.servicebeans.CartFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -17,7 +21,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
-import org.apache.jasper.tagplugins.jstl.ForEach;
+import javax.inject.Inject;
 
 @Named("cartController")
 @SessionScoped
@@ -29,12 +33,16 @@ public class CartController implements Serializable {
     private web.servicebeans.CartFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-    @javax.faces.bean.ManagedProperty(value = "loginController")
+    @Inject
     private LoginController objLoginController;
 
     public CartController() {
     }
 
+    public void setObjLoginController(LoginController objLoginController) {
+        this.objLoginController = objLoginController;
+    }
+    
     public Cart getSelected() {
         if (current == null) {
             current = new Cart();
@@ -59,10 +67,17 @@ public class CartController implements Serializable {
 
                 @Override
                 public DataModel createPageDataModel() {
-                    DataModel tempCarts = new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
-                    for(int i=0; i<tempCarts.getRowCount(); i++) {
+                    List<Cart> finalCartList = new ArrayList<>();
+                    DataModel tempCart = new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                    int cust_id = objLoginController.getCustomer().getCustomerId();
+                    Iterator itr = tempCart.iterator();
+                    while (itr.hasNext()) {
+                        Cart objCart = (Cart) itr.next();
+                        if(cust_id == objCart.getCustomerId().getCustomerId()) {
+                            finalCartList.add(objCart);
+                        }
                     }
-                    return tempCarts;
+                    return new ListDataModel(finalCartList);
                 }
             };
         }
