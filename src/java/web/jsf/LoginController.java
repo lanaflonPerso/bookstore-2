@@ -5,10 +5,13 @@
  */
 package web.jsf;
 
+import com.oracle.bookstore.entities.Customer;
+import java.util.ResourceBundle;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.inject.Named;
+import web.jsf.util.JsfUtil;
 
 /**
  *
@@ -18,6 +21,11 @@ import javax.inject.Named;
 @SessionScoped
 @ManagedBean
 public class LoginController {
+    
+    @EJB
+    private web.servicebeans.CustomerFacade ejbFacade;
+    
+    private Customer customer;
     private String username;
     private String password;
 
@@ -36,11 +44,25 @@ public class LoginController {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
     
     public String login(){
         
         System.out.println("  "+username+"   --> "+password);
-        
+        Customer c = ejbFacade.findCustomerByUsername(username);
+        if(c!= null){
+            this.customer = c;
+            
+        } else {
+            JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("incorrect.login"));
+        }
         return "";
     }
     public String logout(){
