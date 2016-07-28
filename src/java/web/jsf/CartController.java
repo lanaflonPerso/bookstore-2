@@ -62,7 +62,7 @@ public class CartController implements Serializable {
                     DataModel tempCarts = new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
                     for(int i=0; i<tempCarts.getRowCount(); i++) {
                     }
-                
+                    return tempCarts;
                 }
             };
         }
