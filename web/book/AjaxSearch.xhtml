@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.SearchBook}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateBookLabel_title}" for="title" />
+                    <h:inputText id="title" value="#{bookController.selected.title}" title="#{bundle.CreateBookLabel_title}" requiredMessage="#{bundle.SearchBookRequiredMessage_bookTitle}" autocomplete="off" >
+                        <f:ajax render="output" event="keyup" listener="#{bookController.search}" ></f:ajax>
+                    </h:inputText>
+                </h:panelGrid>
+                <h:panelGroup id="searchPanelGroup" layout="block" >
+                    <h:panelGrid id="output" style="margin-top: -12px;" >                 
+                        <ui:repeat value="#{bookController.items}" var="item" rendered="#{bookController.selected.title.length()>0}">
+                            <li class="searchResult"><h:outputText value="#{item.title}"/></li>
+                        </ui:repeat>                    
+                    </h:panelGrid>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{bookController.search}" value="#{bundle.Search}" >
+                    
+                </h:commandLink>
+                <br />
+                <br />
+                <h:commandLink action="#{bookController.prepareList}" value="#{bundle.CreateBookShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateBookIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
