@@ -19,7 +19,7 @@ import web.jsf.util.JsfUtil;
  */
 @Named("loginController")
 @SessionScoped
-public class LoginController implements Serializable {
+public class LoginController implements Serializable{
     
     @EJB
     private web.servicebeans.CustomerFacade ejbFacade;
@@ -66,9 +66,10 @@ public class LoginController implements Serializable {
     }
     public String logout(){
         
-        System.out.println("  "+username+"   --> "+password);
+        System.out.println("signout  "+username+"   --> "+password);
         this.setPassword(null);
         this.setUsername(null);
+        this.customer = null;
         return "/index";
     }
     

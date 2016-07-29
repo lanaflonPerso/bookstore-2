@@ -7,7 +7,7 @@
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title><ui:insert name="pagetitle">Default Title</ui:insert></title>
-        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous" ></link>
 
@@ -67,8 +67,8 @@ src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></scrip
 
         
         <ul class="nav navbar-nav navbar-right">
-            <li><h:commandLink action="#{loginController.logout()}"><span class="glyphicon glyphicon-user"></span> Sign Out</h:commandLink></li>
-            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> &nbsp;&nbsp; <h:outputText value="#{loginController.customer.username}"></h:outputText>&nbsp;&nbsp;</a></li>
+            <li><h:commandLink action="#{loginController.logout()}" rendered="#{loginController.customer != null}"> <span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Sign Out</h:commandLink></li>
+            <li><h:commandLink action="#{loginController.logout()}" rendered="#{loginController.customer != null}"><span class="glyphicon glyphicon-user"></span> &nbsp;&nbsp; <h:outputText value="#{loginController.customer.username}"></h:outputText>&nbsp;&nbsp;</h:commandLink></li>
         </ul>
 
     </nav></h:form>

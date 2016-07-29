@@ -11,10 +11,13 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -36,6 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Customer.findByLocation", query = "SELECT c FROM Customer c WHERE c.location = :location"),
     @NamedQuery(name = "Customer.findByFirstName", query = "SELECT c FROM Customer c WHERE c.firstName = :firstName"),
     @NamedQuery(name = "Customer.findByLastName", query = "SELECT c FROM Customer c WHERE c.lastName = :lastName")})
+@SequenceGenerator(name="customerSequence",initialValue=1, allocationSize=100)
 public class Customer implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,6 +47,7 @@ public class Customer implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "CUSTOMER_ID")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customerSequence")
     private Integer customerId;
     @Column(name = "PHONE_NUMBER")
     private Long phoneNumber;

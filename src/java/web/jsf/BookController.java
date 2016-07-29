@@ -25,12 +25,20 @@ public class BookController implements Serializable {
 
     private Book current;
     private DataModel items = null;
+    private DataModel cartItems = null;
     @EJB
     private web.servicebeans.BookFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
     public BookController() {
+    }
+    
+    public DataModel getCartItems() {
+        if (cartItems == null) {
+            cartItems = getPagination().createPageDataModel();
+        }
+        return cartItems;
     }
 
     public Book getSelected() {
@@ -250,5 +258,12 @@ public class BookController implements Serializable {
         }
 
     }
-
+    
+    public String addToCart() {
+        current = (Book) getItems().getRowData();
+        // send request to facade and save there.
+        ejbFacade.saveBookInCart(current);
+        cartItems = ejbFacade.getCartBooksOfCustomer();
+        return "Cart";
+    }
 }
