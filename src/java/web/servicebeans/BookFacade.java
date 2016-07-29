@@ -38,16 +38,23 @@ public class BookFacade extends AbstractFacade<Book> {
     }
     
     public void saveBookInCart(Book current) {
-        // create cart object and save it
-        Cart objCart = new Cart();
-        CartPK objCartPK = new CartPK(1, current.getBookId());
-        objCart.setCartPK(objCartPK);
-        Customer objCustomer = new Customer();
-        objCustomer.setCustomerId(1);
-        objCart.setCustomerId(objCustomer);
-        objCart.setQuantity(10);
-        objCart.setStatus(1);
-        em.persist(objCart);
+        // check if book is already in cart
+        Query getBookQuery = getEntityManager().createQuery("select count(c) from Cart c where c.customerId.customerId = :custId and c.cartPK.bookId = :bookId");
+        getBookQuery.setParameter("custId", 1);
+        getBookQuery.setParameter("bookId", current.getBookId());
+        int bookCount = ((Number)getBookQuery.getSingleResult()).intValue();
+        if (bookCount == 0) {
+            // create cart object and save it
+            Cart objCart = new Cart();
+            CartPK objCartPK = new CartPK(1, current.getBookId());
+            objCart.setCartPK(objCartPK);
+            Customer objCustomer = new Customer();
+            objCustomer.setCustomerId(1);
+            objCart.setCustomerId(objCustomer);
+            objCart.setQuantity(10);
+            objCart.setStatus(1);
+            em.persist(objCart);
+        }
     }
     
     public DataModel getCartBooksOfCustomer() {
