@@ -9,9 +9,14 @@ import com.oracle.bookstore.entities.Book;
 import com.oracle.bookstore.entities.Cart;
 import com.oracle.bookstore.entities.CartPK;
 import com.oracle.bookstore.entities.Customer;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Stateless;
+import javax.faces.model.DataModel;
+import javax.faces.model.ListDataModel;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -45,4 +50,11 @@ public class BookFacade extends AbstractFacade<Book> {
         em.persist(objCart);
     }
     
+    public DataModel getCartBooksOfCustomer() {
+        // get all items of a user from database. Also add recently selected one and prepare list.
+        Query query = getEntityManager().createQuery("select b from Book b, Cart c where b.bookId=c.cartPK.bookId and c.customerId.customerId= :cust");
+        query.setParameter("cust", 1);
+        List<Book> bookList = query.getResultList();
+        return new ListDataModel(bookList);
+    }
 }

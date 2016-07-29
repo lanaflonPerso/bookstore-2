@@ -265,17 +265,7 @@ public class BookController implements Serializable {
         current = (Book) getItems().getRowData();
         // send request to facade and save there.
         ejbFacade.saveBookInCart(current);
-        
-        // get all items of a user from database. Also add recently selected one and prepare list.
-        Query query = ejbFacade.getEntityManager().createQuery("select b from Book b, Cart c where b.bookId=c.cartPK.bookId and c.customerId.customerId= :cust");
-        query.setParameter("cust", 1);
-        List<Book> bookList = query.getResultList();
-        List<Book> list = new ArrayList<>();
-        // list.add(current);
-        for(int i=0; i<bookList.size(); i++) {
-            list.add(bookList.get(i));
-        }
-        cartItems = new ListDataModel(list);
+        cartItems = ejbFacade.getCartBooksOfCustomer();
         return "Cart";
     }
 }
