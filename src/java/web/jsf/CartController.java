@@ -33,26 +33,23 @@ import javax.inject.Named; //for bean declaration
 public class CartController implements Serializable {
 
     private Cart current;
-
-    @Inject
-    private LoginController currentUser;
-
-    public LoginController getCurrentUser() {
-        return currentUser;
-    }
-
-    public void setCurrentUser(LoginController currentUser) {
-        this.currentUser = currentUser;
-    }
-
     private DataModel items = null;
     @EJB
     
     private web.servicebeans.CartFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-    @javax.faces.bean.ManagedProperty(value = "loginController")
+    //@javax.faces.bean.ManagedProperty(value = "loginController")
+    @Inject
     private LoginController objLoginController;
+
+    public LoginController getObjLoginController() {
+        return objLoginController;
+    }
+
+    public void setObjLoginController(LoginController objLoginController) {
+        this.objLoginController = objLoginController;
+    }
 
     public CartController() {
     }
@@ -214,10 +211,10 @@ public class CartController implements Serializable {
     }
     public String viewCustomerCart()
     {
-      EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "bookstorePU" );
-      EntityManager entitymanager = emfactory.createEntityManager();
-     // LoginController currentUser = new LoginController();
-     Customer tempCustomer = currentUser.getCustomer();
+     
+     EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "bookstorePU" );
+     EntityManager entitymanager = emfactory.createEntityManager();
+     Customer tempCustomer = objLoginController.getCustomer();
      System.out.println("-----------------------------"+tempCustomer);
      Query query = entitymanager.createQuery( "SELECT c FROM Cart c where c.customerId = :vcurrentCustomer" );
      query.setParameter("vcurrentCustomer", tempCustomer);
@@ -237,9 +234,6 @@ public class CartController implements Serializable {
     public Cart getCart(com.oracle.bookstore.entities.CartPK id) {
         return ejbFacade.find(id);
     }
-
-    
-
 
     @FacesConverter(forClass = Cart.class)
     public static class CartControllerConverter implements Converter {

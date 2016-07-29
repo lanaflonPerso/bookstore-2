@@ -30,6 +30,9 @@ public class BookController implements Serializable {
     private web.servicebeans.BookFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    
+    @javax.faces.bean.ManagedProperty(value = "loginController")
+    private LoginController objLoginController;
 
     public BookController() {
     }

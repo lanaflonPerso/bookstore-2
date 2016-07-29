@@ -36,8 +36,18 @@ public class BookBillController implements Serializable {
     private web.servicebeans.BookBillFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-    private LoginController currentCustomer ;
 
+    @javax.faces.bean.ManagedProperty(value = "loginController")
+    private LoginController objLoginController;
+
+    public LoginController getObjLoginController() {
+        return objLoginController;
+    }
+
+    public void setObjLoginController(LoginController objLoginController) {
+        this.objLoginController = objLoginController;
+    }
+    
     public BookBillController() {
     }
 
@@ -206,7 +216,7 @@ public class BookBillController implements Serializable {
      EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "bookstorePU" );
      EntityManager entitymanager = emfactory.createEntityManager();
 
-     Customer tempCustomer = currentCustomer.getCustomer();
+     Customer tempCustomer = objLoginController.getCustomer();
       
      Query query = entitymanager.createQuery( "SELECT B.billId FROM BookBill B where B.customerId = :vcurrentCustomer" );
      query.setParameter("vcurrentCustomer", tempCustomer);
