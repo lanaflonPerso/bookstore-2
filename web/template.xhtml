@@ -49,17 +49,19 @@ src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></scrip
         
         <li><h:link outcome="/billDetails/List" value="BillDetails"/></li>
         
-        <li><h:link outcome="/book/List" value="Book"/></li>
+        <li><h:link outcome="/book/HomeBookView" value="Book"/></li>
         
         <li><h:link outcome="/bookBill/List" value="BookBill"/></li>
         
-        <li><h:link outcome="/cart/List" value="Cart"/></li>
+        <li><h:commandLink action="#{cartController.viewCustomerCart}" value="Cart"/></li>
         
         <li><h:link outcome="/category/List" value="Category"/></li>
         
         <li><h:link outcome="/customer/List" value="Customer"/></li>
         
         <li><h:link outcome="/book/AjaxSearch" value="Search Book"/></li>
+        
+        <li><h:commandLink action="#{bookBillController.viewPurchaseHistory}" value="Order History"/></li>
         
         </ul>
 
