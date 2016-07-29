@@ -118,18 +118,22 @@ public class SecurityFilter implements Filter {
                 HttpSession session = ((HttpServletRequest) request).getSession(false);
                 HttpServletResponse httpResponse = (HttpServletResponse) response;
 //        LoginController loginController = (session != null) ? (LoginController) session.getAttribute("loginController") : null;
-        
+        HttpServletRequest req = ((HttpServletRequest)request);
         String URI = ((HttpServletRequest)request).getRequestURI();     
-        System.out.println("URI ----->>>>>"+URI);
-        if(URI.startsWith("/bookstore/faces/") && !URI.startsWith("/bookstore/faces/css/") && !URI.startsWith("/bookstore/faces/javax.faces.resource/") && !URI.equalsIgnoreCase("/bookstore/faces/index.xhtml") && !URI.equalsIgnoreCase("/bookstore/faces/register.xhtml")){
+        
+        
+        StringBuffer url = req.getRequestURL();
+        //String uri = req.getRequestURI();
+        String ctx = req.getContextPath();
+        String base = url.substring(0, url.length() - URI.length() + ctx.length()) + "/";
+        System.out.println("URI ----->>>>>"+ctx);
+        ctx = ctx + "/";
+        if(URI.startsWith(ctx +"faces/") && !URI.startsWith(ctx +"faces/css/") && !URI.startsWith(ctx +"faces/javax.faces.resource/") && !URI.equalsIgnoreCase(ctx +"faces/index.xhtml") && !URI.equalsIgnoreCase(ctx +"faces/register.xhtml")){
             if (loginController != null &&  loginController.getCustomer() != null &&  loginController.getCustomer().getUsername() != null) {
                 // Logged in.
                 System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n null....");
-                
-                
-
             } else {
-                httpResponse.sendRedirect("/bookstore/");
+                httpResponse.sendRedirect(ctx);
                 return;
                 //System.out.println(loginController.getUsername());
             }

@@ -292,10 +292,14 @@ public class BookController implements Serializable {
     }
     
     public String addToCart() {
-        current = (Book) getItems().getRowData();
-        // send request to facade and save there.
-        ejbFacade.saveBookInCart(current);
-        cartItems = ejbFacade.getCartBooksOfCustomer();
-        return "Cart";
+        if (getItems().getRowCount() > 0) {
+            if (getItems().getRowIndex() >= 0) {
+                current = (Book) getItems().getRowData();
+                // send request to facade and save there.
+                ejbFacade.saveBookInCart(current);
+            }
+            cartItems = ejbFacade.getCartBooksOfCustomer();
+        }
+        return "/cart/List";
     }
 }
