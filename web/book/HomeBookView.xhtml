@@ -39,17 +39,7 @@
                             <p></p>
                             <p><label for="usertype" class="control-label">Books </label></p> 
 
-                            <div class="form-inline">
-                                <input type="email" class="form-control" size="50" placeholder="search by name/author"></input>
-
-                                <label for="usertype" class="control-label">Search By </label>
-                                <select class="form-control" id="usertype">
-                                    <option value="E">Author</option>
-                                    <option value="E">Title</option>
-                                </select>
-                                <button type="button" class="btn btn-danger">Search</button>
-                            </div>
-                        </div>
+                                                    </div>
                         <p></p>        
                         <p></p>
                         <p></p>
@@ -73,8 +63,19 @@
                                         <div class="panel-body"><label><h:outputLabel value="Description"> <label> : </label> &nbsp; </h:outputLabel><h:outputText value="#{item.description}"></h:outputText></label><p>&nbsp;</p>
                                             <label><h:outputLabel value="Author"><label> : </label> &nbsp; </h:outputLabel><h:outputText value="#{item.author}"></h:outputText></label><p>&nbsp;</p>
                                             <label><h:outputLabel value="Price"> <label> : </label> &nbsp;</h:outputLabel><h:outputText value="#{item.price}"></h:outputText></label><p>&nbsp;</p>
-
-                                            <a href="cart.jsp"><button type="button" class="btn btn-primary">Add to Cart</button></a></div>
+                                          </div>   
+                                        
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{bookController.prepareView}" value="#{bundle.ListBookViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{bookController.prepareEdit}" value="#{bundle.ListBookEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{bookController.destroy}" value="#{bundle.ListBookDestroyLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{bookController.addToCart}" value="Add book to cart"/>
+                                        
                                     </ui:repeat> 
                                     </ui:composition>
 

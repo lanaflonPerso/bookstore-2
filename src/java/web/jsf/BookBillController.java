@@ -212,26 +212,13 @@ public class BookBillController implements Serializable {
     }
     
     public String viewPurchaseHistory()
-    {        
-     EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "bookstorePU" );
-     EntityManager entitymanager = emfactory.createEntityManager();
-
-     Customer tempCustomer = objLoginController.getCustomer();
-      
-     Query query = entitymanager.createQuery( "SELECT B.billId FROM BookBill B where B.customerId = :vcurrentCustomer" );
-     query.setParameter("vcurrentCustomer", tempCustomer);
-     List<Integer> billIdList = (List<Integer>)query.getResultList();
-     
-     TypedQuery<BillDetails> strQuery = null;
-     strQuery = entitymanager.createQuery("SELECT B FROM BillDetails B where B.bookBill.billId IN  :inclList ", BillDetails.class);
-     strQuery.setParameter("inclList", billIdList);
-     List<BillDetails> billDetailsList = (List<BillDetails>)strQuery.getResultList();
-
+    {          
+     List<BillDetails> billDetailsList = ejbFacade.viewPurchaseHistory();
      current = (BookBill) getItems().getRowData() ;
      current.setBillDetailsCollection(billDetailsList);
      selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
      
-     return "pages/bookBill/PurchaseHistory" ;   
+     return "/bookBill/PurchaseHistory" ;   
     }
 
 

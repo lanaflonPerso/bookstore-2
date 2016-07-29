@@ -43,6 +43,28 @@
                             <h:commandLink action="#{billDetailsController.previous}" value="#{bundle.Previous} #{billDetailsController.pagination.pageSize}" rendered="#{billDetailsController.pagination.hasPreviousPage}"/>&nbsp;
                             <h:commandLink action="#{billDetailsController.next}" value="#{bundle.Next} #{billDetailsController.pagination.pageSize}" rendered="#{billDetailsController.pagination.hasNextPage}"/>&nbsp;
                             <h:dataTable value="#{billDetailsController.items}" var="item" id="myTable" class="table table-striped">
+                               
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Title"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.book.title}"/>
+                                </h:column>
+                                
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Author"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.book.author}"/>
+                                </h:column>
+                                                   
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Description"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.book.description}"/>
+                                </h:column>
+                                
                                 <h:column>
                                     <f:facet name="header">
                                         <h:outputText value="#{bundle.ListBillDetailsTitle_quantity}"/>
@@ -55,24 +77,8 @@
                                     </f:facet>
                                     <h:outputText value="#{item.price}"/>
                                 </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="#{bundle.ListBillDetailsTitle_bookBill}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.bookBill}"/>
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="#{bundle.ListBillDetailsTitle_book}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.book}"/>
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="#{bundle.ListBillDetailsTitle_book}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.book.title}"/>
-                                </h:column>
+                                
+                               
 
                             </h:dataTable>
                         </h:panelGroup>
