@@ -39,17 +39,8 @@ public class CartController implements Serializable {
     private web.servicebeans.CartFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-    //@javax.faces.bean.ManagedProperty(value = "loginController")
-    @Inject
+    @javax.faces.bean.ManagedProperty(value = "loginController")
     private LoginController objLoginController;
-
-    public LoginController getObjLoginController() {
-        return objLoginController;
-    }
-
-    public void setObjLoginController(LoginController objLoginController) {
-        this.objLoginController = objLoginController;
-    }
 
     public CartController() {
     }

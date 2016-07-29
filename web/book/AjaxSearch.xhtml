@@ -13,20 +13,27 @@
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
-            <h:form>
-                <h:panelGrid columns="2">
-                    <!--<h:outputLabel value="#{bundle.CreateBookLabel_title}" for="title" />-->
-                    <h:inputText id="title" value="#{bookController.selected.title}" title="#{bundle.CreateBookLabel_title}" requiredMessage="#{bundle.SearchBookRequiredMessage_bookTitle}" autocomplete="off" >
-                        <f:ajax render="output" event="keyup" listener="#{bookController.search}" ></f:ajax>
-                    </h:inputText>
-                </h:panelGrid>
+            <h:form prependId="false">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!--<h:panelGrid columns="2">-->
+                            <!--<h:outputLabel value="#{bundle.CreateBookLabel_title}" for="title" />-->
+                            <h:inputText class="form-control" id="title" value="#{bookController.searchString}"  title="#{bundle.CreateBookLabel_title}" requiredMessage="#{bundle.SearchBookRequiredMessage_bookTitle}" autocomplete="off" >
+                                <f:ajax render="output" event="keyup" listener="#{bookController.search}" ></f:ajax>
+                            </h:inputText>
+                        <!--</h:panelGrid>-->
+                     </div>
+                </div>
+                
                 <h:panelGroup id="searchPanelGroup" layout="block" >
-                    <h:panelGrid id="output" style="margin-top: -12px;" >                 
-                        <ui:repeat value="#{bookController.items}" var="item" rendered="#{bookController.selected.title.length()>0}">
-                            <li class="searchResult">
-                                <h:commandLink action="#{bookController.prepareView}" value="#{item.title} #{item.author}"/>                                
+                    <h:panelGrid id="output" style="margin-top: -12px;" > 
+                        <ul class="list-group searchResult"  >
+                        <ui:repeat value="#{bookController.searchResult}" var="item" rendered="#{bookController.searchString.length()>0}">
+                            <li class="list-group-item">
+                                <h:commandLink action="#{bookController.viewBook(item)}" value="#{item.title} #{item.author}"/>                                
                             </li>
-                        </ui:repeat>                    
+                        </ui:repeat>    
+                            </ul>
                     </h:panelGrid>
                 </h:panelGroup>
                 <br />

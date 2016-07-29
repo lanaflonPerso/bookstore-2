@@ -56,7 +56,7 @@ public class LoginController implements Serializable{
         
         System.out.println("  "+username+"   --> "+password);
         Customer c = ejbFacade.findCustomerByUsername(username);
-        if(c!= null){
+        if(c!= null && c.getPassword().equals(password)){
             this.customer = c;
             
         } else {
