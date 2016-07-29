@@ -87,11 +87,12 @@ public class RegisterController {
         if(getConfirmPassword().equals(this.customer.getPassword())){
             
             ejbFacade.saveCustomer(customer);
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("registration.success"));
         } else {
         JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("password.notmatching"));
         }
         
         
-        return "";
+        return "/index";
     }    
 }
