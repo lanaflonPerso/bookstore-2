@@ -5,10 +5,13 @@
  */
 package web.jsf;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
+import com.oracle.bookstore.entities.Customer;
+import java.io.Serializable;
+import java.util.ResourceBundle;
+import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+import web.jsf.util.JsfUtil;
 
 /**
  *
@@ -16,8 +19,12 @@ import javax.inject.Named;
  */
 @Named("loginController")
 @SessionScoped
-@ManagedBean
-public class LoginController {
+public class LoginController implements Serializable{
+    
+    @EJB
+    private web.servicebeans.CustomerFacade ejbFacade;
+    
+    private Customer customer;
     private String username;
     private String password;
 
@@ -36,19 +43,34 @@ public class LoginController {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
     
     public String login(){
         
         System.out.println("  "+username+"   --> "+password);
-        
+        Customer c = ejbFacade.findCustomerByUsername(username);
+        if(c!= null && c.getPassword().equals(password)){
+            this.customer = c;
+            
+        } else {
+            JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("incorrect.login"));
+        }
         return "";
     }
     public String logout(){
         
-        System.out.println("  "+username+"   --> "+password);
+        System.out.println("signout  "+username+"   --> "+password);
         this.setPassword(null);
         this.setUsername(null);
-        return "index";
+        this.customer = null;
+        return "/index";
     }
     
 }

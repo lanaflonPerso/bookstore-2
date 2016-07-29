@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/template.xhtml">
 <!--        <ui:define name="header">
-            <h:outputText value="#{bundle.CreateBookTitle}"></h:outputText>
+            <h:outputText value=""></h:outputText>
                     <div class="col-xs-4">
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-header">
@@ -72,7 +72,7 @@ Crissword
       <div class="modal-content">
           <div class="modal-header">
 <!--              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>-->
-              <h4 class="modal-title" id="myModalLabel">Welcome to Crissword</h4>
+              <h4 class="modal-title" id="myModalLabel">Welcome to Crissword, Login to continue</h4>
           </div>
           <div class="modal-body">
               <div class="row">
@@ -100,10 +100,11 @@ Crissword
                                   </select>
                                   <span class="help-block"></span>
                               </div>-->
+<h:messages  errorClass="text-danger"></h:messages>
                               <div id="loginErrorMsg" class="alert alert-error hide">Wrong username or password or user type.</div>
                               
                               <h:commandButton action="#{loginController.login()}" type="submit" class="btn btn-success btn-block" value="Login"></h:commandButton>
-                              <a href="/register/" class="btn btn-default btn-block">Register as a Customer</a>
+                              <h:link outcome="/register" value="#{bundle.register}" class="btn btn-default btn-block" />
                           </h:form>
                       </div>
                   </div>

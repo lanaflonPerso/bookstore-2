@@ -25,12 +25,38 @@ public class BookController implements Serializable {
 
     private Book current;
     private DataModel items = null;
+    private DataModel cartItems = null;
     @EJB
     private web.servicebeans.BookFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    private String searchString;
+    private DataModel searchResult = null;
+
+    public String getSearchString() {
+        return searchString;
+    }
+
+    public void setSearchString(String searchString) {
+        this.searchString = searchString;
+    }
+
+    public DataModel getSearchResult() {
+        return searchResult;
+    }
+
+    public void setSearchResult(DataModel searchResult) {
+        this.searchResult = searchResult;
+    }
 
     public BookController() {
+    }
+    
+    public DataModel getCartItems() {
+        if (cartItems == null) {
+            cartItems = getPagination().createPageDataModel();
+        }
+        return cartItems;
     }
 
     public Book getSelected() {
@@ -95,15 +121,25 @@ public class BookController implements Serializable {
             return null;
         }
     }
-    
-    public String search(){
+    public String viewBook(Book b){
         try{
-            String title = getSelected().getTitle();            
+            current = b;
+            System.out.println("current "+current);
+//            selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+            System.out.println("selectedItemIndex "+selectedItemIndex);
+        }catch(Exception e){
+            System.out.println("My exception :: "+e);
+        }
+            return "View";
+     }
+   public String search(){
+        try{
+            String title = searchString;            
             if(!"".equalsIgnoreCase(title)){
                 List searchResultList=getFacade().search("select b from Book b where b.title LIKE '%"+title+"%' or b.author LIKE '%"+title+"%' or b.publisher LIKE '%"+title+"%' or b.description LIKE '%"+title+"%' ");
-                items=new ListDataModel(searchResultList);                
+                searchResult=new ListDataModel(searchResultList);                
             }else{
-                items = null;
+                searchResult = null;
             }
         }catch (Exception e) {
             System.out.println("Exception :: ");
@@ -112,6 +148,7 @@ public class BookController implements Serializable {
         }
         return null;
     }
+    
     
 
     public String prepareEdit() {
@@ -264,5 +301,16 @@ public class BookController implements Serializable {
         }
 
     }
-
+    
+    public String addToCart() {
+        if (getItems().getRowCount() > 0) {
+            if (getItems().getRowIndex() >= 0) {
+                current = (Book) getItems().getRowData();
+                // send request to facade and save there.
+                ejbFacade.saveBookInCart(current);
+            }
+            cartItems = ejbFacade.getCartBooksOfCustomer();
+        }
+        return "/cart/List";
+    }
 }
