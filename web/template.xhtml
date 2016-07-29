@@ -31,12 +31,23 @@ src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></scrip
         $('#myTable').dataTable();
     });
 </script>
+        <h:outputScript name="bootstrap.js" library="js"/>
+        <h:outputStylesheet name="css/jquery-ui.css"/>
+        <h:outputScript name="jquery.js" library="js"/>
+        <h:outputScript name="jquery-ui.js" library="js"/>
+        
+         <script>
+            $(function(){
+                $( "#form\\:createdDate" ).datepicker({
+                    dateFormat: "dd-mm-yy"
+                });
+            });
+        </script>    
     </h:head>
 
     <h:body>
         <div class="container-fluid">
-            
-        
+
         <ui:insert name="header">
         
 <h:form>
@@ -61,14 +72,24 @@ src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></scrip
         
         <li><h:link outcome="/book/AjaxSearch" value="Search Book"/></li>
         
+        <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><h:link outcome="/book/Bookmanager" value="Manage Books"/></li>
+          <li><h:link outcome="/book/List" value="Manage Category"/></li>
+        </ul>
+      </li>
+        
         </ul>
 
+        
         
         <ul class="nav navbar-nav navbar-right">
             <li><h:commandLink action="#{loginController.logout()}"><span class="glyphicon glyphicon-user"></span> Sign Out</h:commandLink></li>
             <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Profile</a></li>
         </ul>
-
+    
     </nav></h:form>
         </ui:insert>
         

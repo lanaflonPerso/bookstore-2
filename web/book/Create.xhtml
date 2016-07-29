@@ -4,7 +4,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-
+    
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
             <h:outputText value="#{bundle.CreateBookTitle}"></h:outputText>
@@ -13,7 +13,7 @@
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
-            <h:form>
+            <h:form id="form">
                 <h:panelGrid columns="2">
                     <h:outputLabel value="#{bundle.CreateBookLabel_bookId}" for="bookId" />
                     <h:inputText id="bookId" value="#{bookController.selected.bookId}" title="#{bundle.CreateBookTitle_bookId}" required="true" requiredMessage="#{bundle.CreateBookRequiredMessage_bookId}"/>
@@ -22,32 +22,27 @@
                     <h:outputLabel value="#{bundle.CreateBookLabel_author}" for="author" />
                     <h:inputText id="author" value="#{bookController.selected.author}" title="#{bundle.CreateBookTitle_author}" />
                     <h:outputLabel value="#{bundle.CreateBookLabel_createdDate}" for="createdDate" />
-                    <h:inputText id="createdDate" value="#{bookController.selected.createdDate}" title="#{bundle.CreateBookTitle_createdDate}" >
-                        <f:convertDateTime pattern="dd-MM-yyyy"/>  
+                    <h:inputText id="createdDate" value="#{bookController.selected.createdDate}">
+                        <f:convertDateTime pattern="dd-MM-yyyy" />
                     </h:inputText>
                     <h:outputLabel value="#{bundle.CreateBookLabel_price}" for="price" />
-                    <h:inputText id="price" value="#{bookController.selected.price}" title="#{bundle.CreateBookTitle_price}" />
-                    <h:outputLabel value="#{bundle.CreateBookLabel_image}" for="image" />
-<!--                    <h:inputTextarea rows="4" cols="30" id="image" value="#{bookController.selected.image}" title="#{bundle.CreateBookTitle_image}" />-->
+                    <h:inputText id="price" value="#{bookController.selected.price}" title="#{bundle.CreateBookTitle_price}" dir="RTL"/>
                     <h:outputLabel value="#{bundle.CreateBookLabel_publisher}" for="publisher" />
                     <h:inputText id="publisher" value="#{bookController.selected.publisher}" title="#{bundle.CreateBookTitle_publisher}" />
                     <h:outputLabel value="#{bundle.CreateBookLabel_stock}" for="stock" />
-                    <h:inputText id="stock" value="#{bookController.selected.stock}" title="#{bundle.CreateBookTitle_stock}" />
+                    <h:inputText id="stock" value="#{bookController.selected.stock}" title="#{bundle.CreateBookTitle_stock}" dir="RTL"/>
                     <h:outputLabel value="#{bundle.CreateBookLabel_description}" for="description" />
-                    <h:inputText id="description" value="#{bookController.selected.description}" title="#{bundle.CreateBookTitle_description}" />
+                    <h:inputTextarea id="description" value="#{bookController.selected.description}" title="#{bundle.CreateBookTitle_description}" />
                     <h:outputLabel value="#{bundle.CreateBookLabel_categoryId}" for="categoryId" />
                     <h:selectOneMenu id="categoryId" value="#{bookController.selected.categoryId}" title="#{bundle.CreateBookTitle_categoryId}" required="true" requiredMessage="#{bundle.CreateBookRequiredMessage_categoryId}">
                         <f:selectItems value="#{categoryController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                 </h:panelGrid>
-                <br />
-                <h:commandLink action="#{bookController.create}" value="#{bundle.CreateBookSaveLink}" />
-                <br />
-                <br />
-                <h:commandLink action="#{bookController.prepareList}" value="#{bundle.CreateBookShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.CreateBookIndexLink}"/>
+                <h:commandButton action="/index" value="#{bundle.HomeLink}"/>
+                &nbsp;
+                <h:commandButton action="#{bookController.prepareBookmanager()}" value="#{bundle.CreateBookShowAllLink}" immediate="true"/>
+                 &nbsp;
+                <h:commandButton action="#{bookController.create}" value="#{bundle.CreateBookSaveLink}" />
             </h:form>
         </ui:define>
     </ui:composition>

@@ -13,7 +13,7 @@
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
-            <h:form>
+            <h:form id="form">
                 <h:panelGrid columns="2">
                     <h:outputLabel value="#{bundle.EditBookLabel_bookId}" for="bookId" />
                     <h:inputText id="bookId" value="#{bookController.selected.bookId}" title="#{bundle.EditBookTitle_bookId}" required="true" requiredMessage="#{bundle.EditBookRequiredMessage_bookId}"/>
@@ -22,33 +22,29 @@
                     <h:outputLabel value="#{bundle.EditBookLabel_author}" for="author" />
                     <h:inputText id="author" value="#{bookController.selected.author}" title="#{bundle.EditBookTitle_author}" />
                     <h:outputLabel value="#{bundle.EditBookLabel_createdDate}" for="createdDate" />
-                    <h:inputText id="createdDate" value="#{bookController.selected.createdDate}" title="#{bundle.EditBookTitle_createdDate}" >
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    <h:inputText id="createdDate" value="#{bookController.selected.createdDate}">
+                        <f:convertDateTime pattern="dd-MM-yyyy" />
                     </h:inputText>
                     <h:outputLabel value="#{bundle.EditBookLabel_price}" for="price" />
-                    <h:inputText id="price" value="#{bookController.selected.price}" title="#{bundle.EditBookTitle_price}" />
-                    <h:outputLabel value="#{bundle.EditBookLabel_image}" for="image" />
-                    <h:inputTextarea rows="4" cols="30" id="image" value="#{bookController.selected.image}" title="#{bundle.EditBookTitle_image}" />
+                    <h:inputText id="price" value="#{bookController.selected.price}" title="#{bundle.EditBookTitle_price}" dir="RTL"/>
                     <h:outputLabel value="#{bundle.EditBookLabel_publisher}" for="publisher" />
                     <h:inputText id="publisher" value="#{bookController.selected.publisher}" title="#{bundle.EditBookTitle_publisher}" />
                     <h:outputLabel value="#{bundle.EditBookLabel_stock}" for="stock" />
-                    <h:inputText id="stock" value="#{bookController.selected.stock}" title="#{bundle.EditBookTitle_stock}" />
+                    <h:inputText id="stock" value="#{bookController.selected.stock}" title="#{bundle.EditBookTitle_stock}" dir="RTL"/>
                     <h:outputLabel value="#{bundle.EditBookLabel_description}" for="description" />
-                    <h:inputText id="description" value="#{bookController.selected.description}" title="#{bundle.EditBookTitle_description}" />
+                    <h:inputTextarea id="description" value="#{bookController.selected.description}" title="#{bundle.EditBookTitle_description}" />
                     <h:outputLabel value="#{bundle.EditBookLabel_categoryId}" for="categoryId" />
                     <h:selectOneMenu id="categoryId" value="#{bookController.selected.categoryId}" title="#{bundle.EditBookTitle_categoryId}" required="true" requiredMessage="#{bundle.EditBookRequiredMessage_categoryId}">
                         <f:selectItems value="#{categoryController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                 </h:panelGrid>
-                <h:commandLink action="#{bookController.update}" value="#{bundle.EditBookSaveLink}"/>
-                <br />
-                <br />
-                <h:link outcome="View" value="#{bundle.EditBookViewLink}"/>
-                <br />
-                <h:commandLink action="#{bookController.prepareList}" value="#{bundle.EditBookShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.EditBookIndexLink}" />
+                <h:commandButton action="/index" value="#{bundle.HomeLink}" />
+                &nbsp;
+                <h:commandButton action="View" value="#{bundle.EditBookViewLink}"/>
+                &nbsp;
+                <h:commandButton action="/book/Bookmanager" value="#{bundle.EditBookShowAllLink}" immediate="true"/>
+                &nbsp;
+                <h:commandButton action="#{bookController.update}" value="#{bundle.EditBookSaveLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>

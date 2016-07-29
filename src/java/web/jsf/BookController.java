@@ -68,6 +68,11 @@ public class BookController implements Serializable {
         return "List";
     }
 
+    public String prepareBookmanager() {
+        recreateModel();
+        return "Bookmanager";
+    }
+    
     public String prepareView() {
         current = (Book) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
@@ -133,6 +138,15 @@ public class BookController implements Serializable {
         recreatePagination();
         recreateModel();
         return "List";
+    }
+    
+    public String destroyFromBookManager() {
+        current = (Book) getItems().getRowData();
+        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+        performDestroy();
+        recreatePagination();
+        recreateModel();
+        return "Bookmanager";
     }
 
     public String destroyAndView() {

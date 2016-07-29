@@ -100,7 +100,7 @@ public class Category implements Serializable {
 
     @Override
     public String toString() {
-        return "com.oracle.bookstore.entities.Category[ categoryId=" + categoryId + " ]";
+        return name;
     }
     
 }

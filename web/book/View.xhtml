@@ -23,12 +23,10 @@
                     <h:outputText value="#{bookController.selected.author}" title="#{bundle.ViewBookTitle_author}"/>
                     <h:outputText value="#{bundle.ViewBookLabel_createdDate}"/>
                     <h:outputText value="#{bookController.selected.createdDate}" title="#{bundle.ViewBookTitle_createdDate}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
                     </h:outputText>
                     <h:outputText value="#{bundle.ViewBookLabel_price}"/>
                     <h:outputText value="#{bookController.selected.price}" title="#{bundle.ViewBookTitle_price}"/>
-                    <h:outputText value="#{bundle.ViewBookLabel_image}"/>
-                    <h:outputText value="#{bookController.selected.image}" title="#{bundle.ViewBookTitle_image}"/>
                     <h:outputText value="#{bundle.ViewBookLabel_publisher}"/>
                     <h:outputText value="#{bookController.selected.publisher}" title="#{bundle.ViewBookTitle_publisher}"/>
                     <h:outputText value="#{bundle.ViewBookLabel_stock}"/>
@@ -39,18 +37,16 @@
                     <h:outputText value="#{bookController.selected.categoryId}" title="#{bundle.ViewBookTitle_categoryId}"/>
                 </h:panelGrid>
                 <br />
-                <h:commandLink action="#{bookController.destroyAndView}" value="#{bundle.ViewBookDestroyLink}"/>
+                <h:commandButton action="/index" value="#{bundle.HomeLink}"/>
+                &nbsp;
+                <h:commandButton action="Edit" value="#{bundle.ViewBookEditLink}"/>
+                &nbsp;
+                <h:commandButton action="#{bookController.destroyAndView}" value="#{bundle.ViewBookDestroyLink}"/>
                 <br />
                 <br />
-                <h:link outcome="Edit" value="#{bundle.ViewBookEditLink}"/>
-                <br />
-                <h:commandLink action="#{bookController.prepareCreate}" value="#{bundle.ViewBookCreateLink}" />
-                <br />
-                <h:commandLink action="#{bookController.prepareList}" value="#{bundle.ViewBookShowAllLink}"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.ViewBookIndexLink}"/>
-
+                <h:commandButton action="#{bookController.prepareCreate}" value="#{bundle.ViewBookCreateLink}" />
+                &nbsp;
+                <h:commandButton action="#{bookController.prepareBookmanager}" value="#{bundle.ViewBookShowAllLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>
