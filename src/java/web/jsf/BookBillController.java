@@ -1,11 +1,14 @@
 package web.jsf;
 
+import com.oracle.bookstore.entities.BillDetails;
 import com.oracle.bookstore.entities.BookBill;
+import com.oracle.bookstore.entities.Customer;
 import web.jsf.util.JsfUtil;
 import web.jsf.util.PaginationHelper;
 import web.servicebeans.BookBillFacade;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -17,6 +20,11 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 @Named("bookBillController")
 @SessionScoped
@@ -28,6 +36,7 @@ public class BookBillController implements Serializable {
     private web.servicebeans.BookBillFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    private LoginController currentCustomer ;
 
     public BookBillController() {
     }
@@ -191,6 +200,30 @@ public class BookBillController implements Serializable {
     public BookBill getBookBill(java.lang.Integer id) {
         return ejbFacade.find(id);
     }
+    
+    public String viewPurchaseHistory()
+    {        
+     EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "bookstorePU" );
+     EntityManager entitymanager = emfactory.createEntityManager();
+
+     Customer tempCustomer = currentCustomer.getCustomer();
+      
+     Query query = entitymanager.createQuery( "SELECT B.billId FROM BookBill B where B.customerId = :vcurrentCustomer" );
+     query.setParameter("vcurrentCustomer", tempCustomer);
+     List<Integer> billIdList = (List<Integer>)query.getResultList();
+     
+     TypedQuery<BillDetails> strQuery = null;
+     strQuery = entitymanager.createQuery("SELECT B FROM BillDetails B where B.bookBill.billId IN  :inclList ", BillDetails.class);
+     strQuery.setParameter("inclList", billIdList);
+     List<BillDetails> billDetailsList = (List<BillDetails>)strQuery.getResultList();
+
+     current = (BookBill) getItems().getRowData() ;
+     current.setBillDetailsCollection(billDetailsList);
+     selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+     
+     return "pages/bookBill/PurchaseHistory" ;   
+    }
+
 
     @FacesConverter(forClass = BookBill.class)
     public static class BookBillControllerConverter implements Converter {

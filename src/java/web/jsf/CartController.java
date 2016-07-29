@@ -1,15 +1,18 @@
 package web.jsf;
 
 import com.oracle.bookstore.entities.Cart;
+import com.oracle.bookstore.entities.Customer;
 import web.jsf.util.JsfUtil;
 import web.jsf.util.PaginationHelper;
 import web.servicebeans.CartFacade;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -17,18 +20,38 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.enterprise.context.SessionScoped ;//for bean scoping
+import javax.inject.Named; //for bean declaration
 
 @Named("cartController")
 @SessionScoped
 public class CartController implements Serializable {
 
     private Cart current;
+
+    @Inject
+    private LoginController currentUser;
+
+    public LoginController getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(LoginController currentUser) {
+        this.currentUser = currentUser;
+    }
+
     private DataModel items = null;
     @EJB
+    
     private web.servicebeans.CartFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-
+    
     public CartController() {
     }
 
@@ -187,6 +210,23 @@ public class CartController implements Serializable {
     public SelectItem[] getItemsAvailableSelectMany() {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
     }
+    public String viewCustomerCart()
+    {
+      EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "bookstorePU" );
+      EntityManager entitymanager = emfactory.createEntityManager();
+     // LoginController currentUser = new LoginController();
+     Customer tempCustomer = currentUser.getCustomer();
+     System.out.println("-----------------------------"+tempCustomer);
+     Query query = entitymanager.createQuery( "SELECT c FROM Cart c where c.customerId = :vcurrentCustomer" );
+     query.setParameter("vcurrentCustomer", tempCustomer);
+     List<Cart> cartDetailsList = (List<Cart>)query.getResultList();
+     System.out.println("-----------------------------"+tempCustomer);
+     
+     current = (Cart) getItems().getRowData() ;
+     selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+     
+     return "pages/cart/CustomerCart";
+    }
 
     public SelectItem[] getItemsAvailableSelectOne() {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
@@ -195,6 +235,9 @@ public class CartController implements Serializable {
     public Cart getCart(com.oracle.bookstore.entities.CartPK id) {
         return ejbFacade.find(id);
     }
+
+    
+
 
     @FacesConverter(forClass = Cart.class)
     public static class CartControllerConverter implements Converter {

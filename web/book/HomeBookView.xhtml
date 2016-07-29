@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"></link>
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous"></link>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></link>
+
+
+                    
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value=""></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form prependId="false">
+
+                <div class="container col-xs-12">
+
+                    <div  class="col-xs-12">
+                        <div class="jumbotron">
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p><label for="usertype" class="control-label">Books </label></p> 
+
+                            <div class="form-inline">
+                                <input type="email" class="form-control" size="50" placeholder="search by name/author"></input>
+
+                                <label for="usertype" class="control-label">Search By </label>
+                                <select class="form-control" id="usertype">
+                                    <option value="E">Author</option>
+                                    <option value="E">Title</option>
+                                </select>
+                                <button type="button" class="btn btn-danger">Search</button>
+                            </div>
+                        </div>
+                        <p></p>        
+                        <p></p>
+                        <p></p>
+
+                        <h:outputText escape="false" value="#{bundle.ListBookEmpty}" rendered="#{bookController.items.rowCount == 0}"/>
+                        <h:panelGroup rendered="#{bookController.items.rowCount > 0}">
+                            <h:commandLink action="#{bookController.previous}" value="#{bundle.Previous} #{bookController.pagination.pageSize}" rendered="#{bookController.pagination.hasPreviousPage}"/>
+                            <h:commandLink action="#{bookController.next}" value="#{bundle.Next} #{bookController.pagination.pageSize}" rendered="#{bookController.pagination.hasNextPage}"/>
+
+
+
+                            <ui:composition class="row">
+                                    <ui:repeat value="#{bookController.items}" var="item" class = "panel panel-default col-md-3">
+
+                                        <div class = "panel-heading">
+                                            <h3 class = "panel-title"><h:outputText value="#{item.title}"></h:outputText></h3>
+                                        </div>
+                                        <a class="thumbnail" href="#">
+                                            <img class="img-responsive" src="../resources/images/Book1.jpg" alt="book image"/>
+                                        </a>
+                                        <div class="panel-body"><label><h:outputLabel value="Description"> <label> : </label> &nbsp; </h:outputLabel><h:outputText value="#{item.description}"></h:outputText></label><p>&nbsp;</p>
+                                            <label><h:outputLabel value="Author"><label> : </label> &nbsp; </h:outputLabel><h:outputText value="#{item.author}"></h:outputText></label><p>&nbsp;</p>
+                                            <label><h:outputLabel value="Price"> <label> : </label> &nbsp;</h:outputLabel><h:outputText value="#{item.price}"></h:outputText></label><p>&nbsp;</p>
+
+                                            <a href="cart.jsp"><button type="button" class="btn btn-primary">Add to Cart</button></a></div>
+                                    </ui:repeat> 
+                                    </ui:composition>
+
+
+                        </h:panelGroup>
+                        <br />
+                        <br />
+                        <br />
+                    </div>
+                                            <h:link outcome="/index" value="#{bundle.ListBillDetailsIndexLink}"/>
+
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
