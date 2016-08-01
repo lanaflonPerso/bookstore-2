@@ -48,6 +48,9 @@ public class BookController implements Serializable {
     public void setSearchResult(DataModel searchResult) {
         this.searchResult = searchResult;
     }
+    
+    @javax.faces.bean.ManagedProperty(value = "loginController")
+    private LoginController objLoginController;
 
     public BookController() {
     }

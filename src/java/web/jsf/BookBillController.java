@@ -1,11 +1,14 @@
 package web.jsf;
 
+import com.oracle.bookstore.entities.BillDetails;
 import com.oracle.bookstore.entities.BookBill;
+import com.oracle.bookstore.entities.Customer;
 import web.jsf.util.JsfUtil;
 import web.jsf.util.PaginationHelper;
 import web.servicebeans.BookBillFacade;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -17,6 +20,11 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 @Named("bookBillController")
 @SessionScoped
@@ -29,6 +37,17 @@ public class BookBillController implements Serializable {
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
+    @javax.faces.bean.ManagedProperty(value = "loginController")
+    private LoginController objLoginController;
+
+    public LoginController getObjLoginController() {
+        return objLoginController;
+    }
+
+    public void setObjLoginController(LoginController objLoginController) {
+        this.objLoginController = objLoginController;
+    }
+    
     public BookBillController() {
     }
 
@@ -191,6 +210,17 @@ public class BookBillController implements Serializable {
     public BookBill getBookBill(java.lang.Integer id) {
         return ejbFacade.find(id);
     }
+    
+    public String viewPurchaseHistory()
+    {          
+     List<BillDetails> billDetailsList = ejbFacade.viewPurchaseHistory();
+     current = (BookBill) getItems().getRowData() ;
+     current.setBillDetailsCollection(billDetailsList);
+     selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+     
+     return "/bookBill/PurchaseHistory" ;   
+    }
+
 
     @FacesConverter(forClass = BookBill.class)
     public static class BookBillControllerConverter implements Converter {
