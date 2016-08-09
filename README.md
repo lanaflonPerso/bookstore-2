@@ -2,11 +2,11 @@
 
 ## Team
 
-* Kamal - Search/View Book
-* Hiren - Buy/Add to cart
-* Tejas - Login/Sign Up
-* Shreya - Purchase History/Show Cart
-* Kuldeep - Add/Update/Delete Book
+* Kamal
+* Hiren
+* Tejas
+* Shreya
+* Kuldeep
 
 
 ## Page Flow
