@@ -58,19 +58,17 @@ src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></scrip
         <ul class="nav navbar-nav navbar-left">
         <li><h:link outcome="/index" value="honme"/></li>
         
-        <li><h:link outcome="/billDetails/List" value="BillDetails"/></li>
-        
         <li><h:link outcome="/book/HomeBookView" value="Book"/></li>
         
         <li><h:link outcome="/bookBill/List" value="BookBill"/></li>
         
         <li><h:commandLink action="#{bookController.addToCart()}" value="Cart"/></li>
         
-        <li><h:link outcome="/category/List" value="Category"/></li>
-        
         <li><h:link outcome="/customer/List" value="Customer"/></li>
         
         <li><h:link outcome="/book/AjaxSearch" value="Search Book"/></li>
+        
+        <li><h:commandLink action="#{bookBillController.viewPurchaseHistory}" value="Order History"/></li>
         
         <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin

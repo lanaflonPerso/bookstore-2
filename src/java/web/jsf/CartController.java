@@ -39,6 +39,8 @@ public class CartController implements Serializable {
     private web.servicebeans.CartFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    @Inject
+    private LoginController objLoginController;
 
     public CartController() {
     }

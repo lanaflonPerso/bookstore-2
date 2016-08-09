@@ -214,10 +214,14 @@ public class BookBillController implements Serializable {
     public String viewPurchaseHistory()
     {          
      List<BillDetails> billDetailsList = ejbFacade.viewPurchaseHistory();
+     try {
      current = (BookBill) getItems().getRowData() ;
+     
      current.setBillDetailsCollection(billDetailsList);
      selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-     
+     } catch(Exception e) {
+         System.out.println("No data found");
+     } 
      return "/bookBill/PurchaseHistory" ;   
     }
 

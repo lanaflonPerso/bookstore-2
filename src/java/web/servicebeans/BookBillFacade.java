@@ -7,6 +7,7 @@ package web.servicebeans;
 
 import com.oracle.bookstore.entities.BillDetails;
 import com.oracle.bookstore.entities.BookBill;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -61,17 +62,24 @@ public class BookBillFacade extends AbstractFacade<BookBill> {
     {
       EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "bookstorePU" );
       EntityManager entitymanager = emfactory.createEntityManager();
+      List<BillDetails> billDetailsList= new ArrayList<BillDetails>();
      
      Query query = entitymanager.createQuery( "SELECT B.billId FROM BookBill B where B.customerId = :vcurrentCustomer" );
      query.setParameter("vcurrentCustomer", getObjLoginController().getCustomer());
+     try
+     {
      List<Integer> billIdList = (List<Integer>)query.getResultList();
-        System.out.println("-----------------------------"+billIdList);
+     
+     System.out.println("-----------------------------"+billIdList);
      
      TypedQuery<BillDetails> strQuery = null;
      strQuery = entitymanager.createQuery("SELECT B FROM BillDetails B where B.bookBill.billId IN  :inclList ", BillDetails.class);
      strQuery.setParameter("inclList", billIdList);
-     List<BillDetails> billDetailsList = (List<BillDetails>)strQuery.getResultList();
-
+      billDetailsList = (List<BillDetails>)strQuery.getResultList();
+     }
+     catch(Exception e) {
+         System.out.println("No data found");
+     }
     return billDetailsList;
     }
     
