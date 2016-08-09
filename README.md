@@ -1,5 +1,14 @@
 # bookstore - JSF/JPA sample case study
 
+## Team
+
+* Kamal - Search/View Book
+* Hiren - Buy/Add to cart
+* Tejas - Login/Sign Up
+* Shreya - Purchase History/Show Cart
+* Kuldeep - Add/Update/Delete Book
+
+
 ## Page Flow
 
 * Login page
@@ -14,15 +23,6 @@
 * Employee Home Page
 	* Add Book
 	* Add Book Quantity
-
-
-## Team
-
-* Kamal - Search/View Book
-* Hiren - Buy/Add to cart
-* Tejas - Login/Sign Up
-* Shreya - Purchase History/Show Cart
-* Kuldeep - Add/Update/Delete Book
 
 
 ## Database Change Management
